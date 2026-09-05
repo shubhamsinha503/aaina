@@ -1,26 +1,34 @@
 # Aaina — Lippan art portfolio
 
-Live at **https://aaina.space** (hosted free on Cloudflare Pages).
+Live at **https://aaina.space**
 
 A static website. No build step, no dependencies, no server.
 
+- **Code:** https://github.com/shubhamsinha503/aaina
+- **Hosting:** Vercel (free) — deploys automatically from GitHub
+- **DNS:** Hostinger
+
 ---
 
-## Updating the live site — the three steps
+## Updating the live site
 
-1. **Edit** whatever you want to change inside the `site` folder (see below)
-2. **Double-click `UPDATE SITE.bat`** — rebuilds `aaina-space-upload.zip`
-3. **Upload it**: Cloudflare dashboard → your project → *Create deployment* →
-   drop the zip in
+Edit a file, then push. Vercel rebuilds and publishes on its own — usually
+under a minute. There is no zip to build and nothing to upload.
 
-Live in about a minute.
+```
+git add -A
+git commit -m "what you changed"
+git push
+```
 
-**If something breaks:** Cloudflare keeps every past deployment. Open the
-deployment list, find the last good one, click **Rollback**. You cannot
-permanently break the live site by uploading a bad version.
+Watch it deploy at https://vercel.com → the `aaina` project → Deployments.
 
-To preview a change before uploading, double-click `site/index.html` — it opens
-in any browser, offline.
+**If something breaks:** Vercel keeps every past deployment. Open the
+Deployments list, find the last good one, and use **Promote to Production**
+(or "Instant Rollback"). You cannot permanently break the live site.
+
+**To preview before pushing:** double-click `site/index.html` — it opens in any
+browser, offline, exactly as it will look live.
 
 ---
 
@@ -60,7 +68,7 @@ email appears twice: the commission button and the footer.
 2. Run `python tools/convert.py` — handles HEIC, writes both image sizes
 3. Add a line to `site/works.js` for each new piece, using the slug the
    converter assigned
-4. Then the three steps at the top
+4. Commit and push
 
 Needs: `python -m pip install pillow pillow-heif`
 
@@ -69,7 +77,7 @@ Needs: `python -m pip install pillow pillow-heif`
 ## Folder layout
 
 ```
-site/                   the website — this is what gets published
+site/                   the website — this is what Vercel publishes
   index.html            markup, styling, behaviour, head and social tags
   works.js              the 59 pieces
   img/thumb/            grid images     (~760px)
@@ -77,36 +85,46 @@ site/                   the website — this is what gets published
   og-image.jpg          link preview card for WhatsApp/Instagram
   favicon.ico, apple-touch-icon.png
   robots.txt, sitemap.xml
-source-photos/          your original HEIC/JPG/MP4 files, untouched
-tools/                  convert.py (photos), make_zip.py (packaging)
-UPDATE SITE.bat         double-click to rebuild the upload zip
-aaina-space-upload.zip  the file you upload to Cloudflare
+source-photos/          your original HEIC/JPG/MP4 files — NOT in git, see below
+tools/                  convert.py (photos), make_zip.py (legacy packaging)
 ```
+
+**`source-photos/` is deliberately excluded from git** — 182 MB of HEIC and
+video is too much for a repository, and the site only needs the converted
+images. **This means GitHub is not backing up your originals.** Keep a copy on
+an external drive or cloud storage; those are the only originals of your work.
+
+`UPDATE SITE.bat` and `tools/make_zip.py` are leftovers from the old
+upload-a-zip workflow. Harmless, and no longer needed.
 
 ---
 
 ## The setup, for reference
 
-- **Domain**: aaina.space, registered at Hostinger — **renews at ₹3,199/year.**
+- **Domain**: aaina.space, registered at Hostinger — **renews ₹3,199/year.**
   Set a reminder ~11 months out. Transferring to a cheaper registrar after the
   first 60 days cuts that substantially.
-- **DNS**: Cloudflare — nameservers `dolly.ns.cloudflare.com` and
-  `odin.ns.cloudflare.com`
-- **Hosting**: Cloudflare Pages — free, nothing to renew
-- **Email**: Cloudflare Email Routing, forwarding to Gmail — free
-
-### A future upgrade
-
-Connecting a GitHub repo would make deployment automatic: save a file, push, and
-Cloudflare rebuilds itself — no zip, no upload. Worth doing if updates become
-frequent.
+- **DNS**: Hostinger nameservers (`aster` / `helios.dns-parking.com`), with two
+  records pointing at Vercel:
+  ```
+  A      @     76.76.21.21
+  CNAME  www   00e85b6bbeb2c3d7.vercel-dns-017.com
+  ```
+  Vercel would prefer `216.198.79.1` for the A record — swapping it clears the
+  "DNS Change Recommended" notice. Both work.
+- **Hosting**: Vercel, free tier, nothing to renew
+- **Email**: not set up. The site's contact buttons still point at a
+  placeholder address.
 
 ---
 
 ## Still placeholder
 
-- Titles and captions were written from looking at the photos. They read well
-  but they are guesses — sizes, dates and names should be checked.
-- `Aaina` as the studio name.
-- The contact email, until Email Routing is set up.
+- **Every title and caption was written by Claude from looking at the photos** —
+  sizes, mirror counts and dates included. They read plausibly but they are
+  guesses, not records. Same for the About text.
+- **`Aaina`** as the studio name.
+- **`hello@example.com`** in the commission button and footer — this address
+  does not exist, so enquiries sent to it go nowhere. Replace it with a real
+  address (Gmail works; Zoho Mail has a free tier for a custom domain).
 - The 10 videos in `source-photos/` are unused.
