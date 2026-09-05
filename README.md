@@ -113,8 +113,8 @@ upload-a-zip workflow. Harmless, and no longer needed.
   Vercel would prefer `216.198.79.1` for the A record — swapping it clears the
   "DNS Change Recommended" notice. Both work.
 - **Hosting**: Vercel, free tier, nothing to renew
-- **Contact**: WhatsApp + phone (+91 89295 60625). No email address on the
-  site yet.
+- **Contact**: WhatsApp + phone (+91 89295 60625) and
+  shubhamsinha5033@gmail.com
 
 ---
 
@@ -124,6 +124,5 @@ upload-a-zip workflow. Harmless, and no longer needed.
   sizes, mirror counts and dates included. They read plausibly but they are
   guesses, not records. Same for the About text.
 - **`Aaina`** as the studio name.
-- **No email on the site yet** — contact is WhatsApp and phone
-  (+91 89295 60625) only. A Gmail address can be added alongside them.
+
 - The 10 videos in `source-photos/` are unused.
