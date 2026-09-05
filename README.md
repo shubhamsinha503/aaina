@@ -65,10 +65,15 @@ email appears twice: the commission button and the footer.
 ## Adding new photos
 
 1. Put them in `source-photos/`
-2. Run `python tools/convert.py` — handles HEIC, writes both image sizes
-3. Add a line to `site/works.js` for each new piece, using the slug the
-   converter assigned
+2. Add a line to `site/works.js` for the new piece. Slugs follow the sorted
+   filename order of `source-photos/` (`p01`, `p02`, …), so adding a file can
+   shift them — check before assuming.
+3. Run `python tools/build_images.py` — reads the originals (HEIC included) and
+   regenerates every size and format the page needs
 4. Commit and push
+
+The page uses `<picture>` elements: modern browsers get WebP at the right width
+for their screen, older ones fall back to JPEG. Nothing to configure.
 
 Needs: `python -m pip install pillow pillow-heif`
 
@@ -80,13 +85,14 @@ Needs: `python -m pip install pillow pillow-heif`
 site/                   the website — this is what Vercel publishes
   index.html            markup, styling, behaviour, head and social tags
   works.js              the 43 pieces
-  img/thumb/            grid images     (~760px)
-  img/full/             lightbox images (~1500px)
+  img/thumb/            grid images     — WebP 400/800px + a 600px JPEG fallback
+  img/full/             lightbox images — WebP 1100/1800px + a 1200px JPEG fallback
   og-image.jpg          link preview card for WhatsApp/Instagram
   favicon.ico, apple-touch-icon.png
   robots.txt, sitemap.xml
 source-photos/          your original HEIC/JPG/MP4 files — NOT in git, see below
-tools/                  convert.py (photos), make_zip.py (legacy packaging)
+tools/                  build_images.py (rebuilds all image sizes),
+                        convert.py + make_zip.py (legacy)
 ```
 
 **`source-photos/` is deliberately excluded from git** — 182 MB of HEIC and

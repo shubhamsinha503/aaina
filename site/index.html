@@ -127,6 +127,7 @@ section{padding:96px 0}
   background:var(--panel);border:1px solid var(--line);border-radius:2px;overflow:hidden;cursor:pointer;position:relative;
   transition:transform .45s cubic-bezier(.2,.7,.3,1),border-color .35s,box-shadow .45s}
 .card:hover,.card:focus-visible{transform:translateY(-5px);border-color:var(--sky-soft);box-shadow:0 18px 40px rgba(51,64,92,.16)}
+.card picture{display:block}
 .card img{width:100%;background:var(--panel-2)}
 .card .glint{position:absolute;inset:0;pointer-events:none;opacity:0;
   background:linear-gradient(104deg,transparent 40%,rgba(255,255,255,.6) 50%,transparent 60%)}
@@ -229,7 +230,11 @@ footer{border-top:1px solid var(--line);padding:52px 0 68px;margin-top:48px}
         </div>
       </div>
       <figure class="hero-fig" style="margin:0">
-        <img id="heroImg" src="img/full/p44.jpg" alt="Navy and chalk-white lippan mirror mandala" width="1200" height="1200">
+        <picture>
+          <source type="image/webp" sizes="(max-width:900px) 92vw, 46vw"
+                  srcset="img/full/p44-1100.webp 1100w, img/full/p44-1800.webp 1800w">
+          <img id="heroImg" src="img/full/p44.jpg" alt="Navy and chalk-white lippan mirror mandala" width="1200" height="1200">
+        </picture>
         <figcaption>Mirror Mandala · 20 inch</figcaption>
       </figure>
     </section>
@@ -278,7 +283,11 @@ footer{border-top:1px solid var(--line);padding:52px 0 68px;margin-top:48px}
 
     <section id="about">
       <div class="about">
-        <img src="img/full/p01.jpg" alt="Working on a lippan thali at the studio table" width="900" height="1200">
+        <picture>
+          <source type="image/webp" sizes="(max-width:880px) 92vw, 38vw"
+                  srcset="img/full/p01-1100.webp 1100w, img/full/p01-1800.webp 1800w">
+          <img src="img/full/p01.jpg" alt="Working on a lippan thali at the studio table" width="900" height="1200">
+        </picture>
         <div>
           <p class="eyebrow">About</p>
           <h2>One table, one plate, and hours</h2>
@@ -321,7 +330,6 @@ footer{border-top:1px solid var(--line);padding:52px 0 68px;margin-top:48px}
         <a href="tel:+918929560625">+91 89295 60625</a>
         <a href="https://wa.me/918929560625" target="_blank" rel="noopener">WhatsApp</a>
         <a href="mailto:shubhamsinha5033@gmail.com">Email</a>
-        <a href="#work">Instagram</a>
         <a href="#commission">Commission</a>
       </nav>
     </div>
@@ -331,7 +339,12 @@ footer{border-top:1px solid var(--line);padding:52px 0 68px;margin-top:48px}
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Artwork detail">
   <button class="lb-close" id="lbClose" aria-label="Close">&#10005;</button>
   <div class="lb-inner">
-    <div class="lb-figure"><img id="lbImg" alt=""></div>
+    <div class="lb-figure">
+        <picture>
+          <source id="lbSrc" type="image/webp" sizes="(max-width:900px) 92vw, 60vw">
+          <img id="lbImg" alt="">
+        </picture>
+      </div>
     <div>
       <p class="eyebrow" id="lbCat"></p>
       <h3 id="lbTitle"></h3>
@@ -376,7 +389,11 @@ function paint(cat){
     view.length+(view.length===1?" piece":" pieces")+(cat==="All"?"":" · "+cat);
   gallery.innerHTML=view.map((w,i)=>`
     <button class="card reveal" data-i="${i}" aria-label="${w.t}">
-      <img src="img/thumb/${w.s}.jpg" alt="${w.t}" loading="lazy" style="aspect-ratio:${w.r}">
+      <picture>
+        <source type="image/webp" sizes="(max-width:620px) 92vw, (max-width:1000px) 46vw, 400px"
+                srcset="img/thumb/${w.s}-400.webp 400w, img/thumb/${w.s}-800.webp 800w">
+        <img src="img/thumb/${w.s}.jpg" alt="${w.t}" loading="lazy" decoding="async" style="aspect-ratio:${w.r}">
+      </picture>
       <span class="glint"></span>
       <span class="meta"><span class="ttl">${w.t}</span><span class="cat">${w.c}</span></span>
     </button>`).join("");
@@ -395,6 +412,8 @@ const lb=document.getElementById("lb"); let cur=0;
 function open(i){
   cur=(i+view.length)%view.length; const w=view[cur];
   const img=document.getElementById("lbImg");
+  document.getElementById("lbSrc").srcset=
+    `img/full/${w.s}-1100.webp 1100w, img/full/${w.s}-1800.webp 1800w`;
   img.src="img/full/"+w.s+".jpg"; img.alt=w.t;
   document.getElementById("lbCat").textContent=w.c;
   document.getElementById("lbTitle").textContent=w.t;
