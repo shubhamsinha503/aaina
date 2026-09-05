@@ -28,13 +28,6 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p09",
-"t": "Small Ganesh Round",
-"c": "Thali",
-"n": "A twelve-inch piece — the same grammar as the large thalis, compressed.",
-"r": 0.75
-},
-{
 "s": "p11",
 "t": "Bal Gopal",
 "c": "Thali",
@@ -63,13 +56,6 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p15",
-"t": "Krishna Silhouette",
-"c": "Mirror Work",
-"n": "A flute-playing silhouette on turquoise, ringed by four bands of mirror and white relief.",
-"r": 0.75
-},
-{
 "s": "p26",
 "t": "Krishna Silhouette · Indigo",
 "c": "Mirror Work",
@@ -81,27 +67,6 @@ const WORKS=[
 "t": "Mirror Mandala · Navy",
 "c": "Mirror Work",
 "n": "Central mirror left bare so the piece reflects whatever room it hangs in.",
-"r": 0.75
-},
-{
-"s": "p39",
-"t": "Mirror Mandala · Wide Band",
-"c": "Mirror Work",
-"n": "Chalk-white relief on navy, six rings deep.",
-"r": 0.75
-},
-{
-"s": "p41",
-"t": "Mirror Mandala · Garden Light",
-"c": "Mirror Work",
-"n": "Photographed outdoors to show how the surface changes with the sun.",
-"r": 0.75
-},
-{
-"s": "p43",
-"t": "Mirror Mandala · Detail",
-"c": "Mirror Work",
-"n": "Every dot raised by hand. No stencil, no cast.",
 "r": 0.75
 },
 {
@@ -133,20 +98,6 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p71",
-"t": "White Lippan Mirror · Fine Border",
-"c": "Mirror Work",
-"n": "Two hundred and forty individual raised dots on the outer ring alone.",
-"r": 0.75
-},
-{
-"s": "p72",
-"t": "Bronze Ring Mirror",
-"c": "Mirror Work",
-"n": "A warmer variant, finished in bronze rather than silver.",
-"r": 0.75
-},
-{
 "s": "p81",
 "t": "Sunset Mandala",
 "c": "Mirror Work",
@@ -168,24 +119,10 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p62",
-"t": "Swastik Thali · Close",
-"c": "Festive",
-"n": "Mirror chips run the full circumference.",
-"r": 0.75
-},
-{
 "s": "p64",
 "t": "Golden Ganesh Thali",
 "c": "Festive",
 "n": "Ganesh raised in gold relief rather than painted — the relief itself does the drawing.",
-"r": 0.75
-},
-{
-"s": "p65",
-"t": "Golden Ganesh · Wide",
-"c": "Festive",
-"n": "Same piece, showing the orange-and-mirror outer band.",
 "r": 0.75
 },
 {
@@ -214,13 +151,6 @@ const WORKS=[
 "t": "Shubh–Labh · Mounted",
 "c": "Hangings",
 "n": "Hung as they are meant to be — one either side of the entrance.",
-"r": 0.75
-},
-{
-"s": "p19",
-"t": "Shubh–Labh · Red",
-"c": "Hangings",
-"n": "The red-and-white version, with brass lotus drops.",
 "r": 0.75
 },
 {
@@ -315,13 +245,6 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p13",
-"t": "Pink Rangoli Round",
-"c": "Festive",
-"n": "An early piece, pink on pink.",
-"r": 1.239
-},
-{
 "s": "p73",
 "t": "Turquoise Matki",
 "c": "Matki",
@@ -333,20 +256,6 @@ const WORKS=[
 "t": "Turquoise Matki · Detail",
 "c": "Matki",
 "n": "Three mirror bands with painted petals between.",
-"r": 0.75
-},
-{
-"s": "p75",
-"t": "Turquoise Matki · Standing",
-"c": "Matki",
-"n": "Roughly fourteen inches tall.",
-"r": 0.75
-},
-{
-"s": "p77",
-"t": "Matki Trio",
-"c": "Matki",
-"n": "White ground with red, black and silver chips.",
 "r": 0.75
 },
 {
@@ -378,31 +287,10 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p14",
-"t": "Base Coat",
-"c": "Studio",
-"n": "The flat ground going on before any relief.",
-"r": 0.563
-},
-{
 "s": "p35",
 "t": "Marking Out",
 "c": "Studio",
 "n": "White relief laid down around a bare mirror, ring by ring.",
-"r": 0.75
-},
-{
-"s": "p36",
-"t": "Board and Mirror",
-"c": "Studio",
-"n": "The starting point of every mirror piece.",
-"r": 0.75
-},
-{
-"s": "p28",
-"t": "Packed for Diwali",
-"c": "Studio",
-"n": "A season's worth of orders, wrapped and sorted.",
 "r": 0.75
 },
 {

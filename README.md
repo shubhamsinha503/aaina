@@ -79,7 +79,7 @@ Needs: `python -m pip install pillow pillow-heif`
 ```
 site/                   the website — this is what Vercel publishes
   index.html            markup, styling, behaviour, head and social tags
-  works.js              the 59 pieces
+  works.js              the 43 pieces
   img/thumb/            grid images     (~760px)
   img/full/             lightbox images (~1500px)
   og-image.jpg          link preview card for WhatsApp/Instagram
@@ -113,8 +113,8 @@ upload-a-zip workflow. Harmless, and no longer needed.
   Vercel would prefer `216.198.79.1` for the A record — swapping it clears the
   "DNS Change Recommended" notice. Both work.
 - **Hosting**: Vercel, free tier, nothing to renew
-- **Email**: not set up. The site's contact buttons still point at a
-  placeholder address.
+- **Contact**: WhatsApp + phone (+91 89295 60625). No email address on the
+  site yet.
 
 ---
 
@@ -124,7 +124,6 @@ upload-a-zip workflow. Harmless, and no longer needed.
   sizes, mirror counts and dates included. They read plausibly but they are
   guesses, not records. Same for the About text.
 - **`Aaina`** as the studio name.
-- **`hello@example.com`** in the commission button and footer — this address
-  does not exist, so enquiries sent to it go nowhere. Replace it with a real
-  address (Gmail works; Zoho Mail has a free tier for a custom domain).
+- **No email on the site yet** — contact is WhatsApp and phone
+  (+91 89295 60625) only. A Gmail address can be added alongside them.
 - The 10 videos in `source-photos/` are unused.
