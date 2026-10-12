@@ -1,5 +1,40 @@
 const WORKS=[
 {
+"s": "p86",
+"t": "Lakshmi Charan · Three Pairs",
+"c": "Festive",
+"n": "Three pairs finished together — one worked in gold and cream, two on red with white mirror petals. A small round dish sits between each pair.",
+"r": 0.8
+},
+{
+"s": "p88",
+"t": "Ganesh Thali · Indigo and Rose",
+"c": "Thali",
+"n": "Concentric bands of mirror — scallops, discs and leaf shapes — ringing a Ganesh on a yellow ground.",
+"r": 1.0
+},
+{
+"s": "p89",
+"t": "Shri Ram Thali",
+"c": "Thali",
+"n": "A ring of lotus petals in indigo, rose and green around a white centre lettered श्री राम.",
+"r": 1.0
+},
+{
+"s": "p90",
+"t": "Sunflower Thali",
+"c": "Thali",
+"n": "Two rounds of petals in yellow and ochre radiating from a central mirror, on a white ground edged with mirror dots.",
+"r": 1.0
+},
+{
+"s": "p87",
+"t": "Mirror Coaster Set",
+"c": "Mirror Work",
+"n": "Coasters and a matching holder in deep red, the top face set with a mirror flower inside a ring of round mirrors.",
+"r": 1.0
+},
+{
 "s": "p08",
 "t": "Radha Krishna Thali",
 "c": "Thali",

@@ -67,7 +67,10 @@ email appears twice: the commission button and the footer.
 1. Put them in `source-photos/`
 2. Add a line to `site/works.js` for the new piece. Slugs follow the sorted
    filename order of `source-photos/` (`p01`, `p02`, …), so adding a file can
-   shift them — check before assuming.
+   shift them — check before assuming. **Name new files so they sort last** and
+   nothing shifts: a leading lowercase letter does it, because lowercase sorts
+   after both digits and capitals. That is why the newest files are named
+   `new-YYYYMMDD-what-it-is.jpg`. `slug_map.json` records which file is which.
 3. Run `python tools/build_images.py` — reads the originals (HEIC included) and
    regenerates every size and format the page needs
 4. Commit and push
@@ -84,7 +87,7 @@ Needs: `python -m pip install pillow pillow-heif`
 ```
 site/                   the website — this is what Vercel publishes
   index.html            markup, styling, behaviour, head and social tags
-  works.js              the 43 pieces
+  works.js              the 48 pieces
   img/thumb/            grid images     — WebP 400/800px + a 600px JPEG fallback
   img/full/             lightbox images — WebP 1100/1800px + a 1200px JPEG fallback
   og-image.jpg          link preview card for WhatsApp/Instagram
@@ -129,3 +132,13 @@ an external drive or cloud storage; those are the only originals of your work.
 - **`Aaina`** as the studio name.
 
 - The 10 videos in `source-photos/` are unused.
+
+- **`p86`–`p90` have no original in `source-photos/` yet.** They were cropped
+  from phone photos and written straight into `site/img/`. Until the five
+  `new-20251012-*.jpg` files are dropped into `source-photos/`, running
+  `tools/build_images.py` will wipe their images and print `!! no original`.
+  The files to add are the *cropped* masters, not the uncropped phone frames —
+  that is what keeps the framing.
+
+- `p88`, `p89` and `p90` were photographed through their packaging; the plastic
+  shows. Worth reshooting unwrapped.

@@ -24,10 +24,12 @@ Q_WEBP, Q_JPEG = 80, 84
 def variants(im, widths, folder, slug, jpeg_width):
     made = []
     for w in widths:
-        if w > im.width:                      # never upscale
-            w = im.width
+        tw = min(w, im.width)                 # never upscale...
         v = im.copy()
-        v.thumbnail((w, w * 10), Image.LANCZOS)
+        v.thumbnail((tw, tw * 10), Image.LANCZOS)
+        # ...but keep the requested width in the name: index.html asks for the
+        # fixed -400/-800/-1100/-1800 filenames, so a narrow original must not
+        # rename its variant out of the srcset.
         p = f"{OUT}/{folder}/{slug}-{w}.webp"
         v.save(p, "WEBP", quality=Q_WEBP, method=5)
         made.append(p)
