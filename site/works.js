@@ -1,5 +1,82 @@
 const WORKS=[
 {
+"s": "p97",
+"t": "Peacock Panel · Cream and Green",
+"c": "Hangings",
+"n": "A single peacock in gold relief on a cream ground, inside a carved frame of green, maroon and mirror.",
+"r": 0.9
+},
+{
+"s": "p98",
+"t": "Peacock Triptych · Indigo",
+"c": "Hangings",
+"n": "Centre panel flanked by two tulip borders, made to hang together as one piece.",
+"r": 1.7
+},
+{
+"s": "p99",
+"t": "Peacock Panel · Indigo",
+"c": "Hangings",
+"n": "The centre panel on its own — pale blue and teal plumes outlined in gold, with a red spine.",
+"r": 0.85
+},
+{
+"s": "p100",
+"t": "Tulip Border Panel",
+"c": "Hangings",
+"n": "Four red tulips climbing a cream arch, on a mirrored indigo ground.",
+"r": 0.42
+},
+{
+"s": "p91",
+"t": "Lotus Thali · Maroon and Green",
+"c": "Thali",
+"n": "Three red lotuses on a cream ground, ringed by zigzag and chequer bands in maroon and deep green.",
+"r": 1.0
+},
+{
+"s": "p92",
+"t": "Lotus Thali · Detail",
+"c": "Thali",
+"n": "The same plate at an angle, where the raised clay line and the set mirrors catch the light.",
+"r": 0.85
+},
+{
+"s": "p96",
+"t": "Mirror Matki · Red and Gold",
+"c": "Matki",
+"n": "Scalloped gold relief over red, bound at the neck with jute and planted with money plant.",
+"r": 0.75
+},
+{
+"s": "p101",
+"t": "Mirror Handi · Yellow",
+"c": "Matki",
+"n": "Round and lozenge mirrors set in a band around the belly, under a scalloped white-edged rim.",
+"r": 0.95
+},
+{
+"s": "p93",
+"t": "Coaster Sets · Five Colourways",
+"c": "Coasters",
+"n": "Five sets laid out together — orange, pink, red and blue, each with a mirrored rosette on the top coaster.",
+"r": 1.0
+},
+{
+"s": "p94",
+"t": "Coaster Set · Indigo",
+"c": "Coasters",
+"n": "A mirrored rosette on the top coaster, in a painted holder with a cut-out front.",
+"r": 1.0
+},
+{
+"s": "p95",
+"t": "Coaster Sets · Stacked",
+"c": "Coasters",
+"n": "Holders in orange, blue and red, the nearest one open to show the coaster inside.",
+"r": 1.0
+},
+{
 "s": "p86",
 "t": "Lakshmi Charan · Three Pairs",
 "c": "Festive",
@@ -30,7 +107,7 @@ const WORKS=[
 {
 "s": "p87",
 "t": "Mirror Coaster Set",
-"c": "Mirror Work",
+"c": "Coasters",
 "n": "Coasters and a matching holder in deep red, the top face set with a mirror flower inside a ring of round mirrors.",
 "r": 1.0
 },

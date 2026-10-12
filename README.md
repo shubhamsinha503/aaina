@@ -87,7 +87,7 @@ Needs: `python -m pip install pillow pillow-heif`
 ```
 site/                   the website — this is what Vercel publishes
   index.html            markup, styling, behaviour, head and social tags
-  works.js              the 48 pieces
+  works.js              the 59 pieces
   img/thumb/            grid images     — WebP 400/800px + a 600px JPEG fallback
   img/full/             lightbox images — WebP 1100/1800px + a 1200px JPEG fallback
   img/about/            the artist portrait in the About section. Hand-made, NOT
@@ -136,12 +136,16 @@ an external drive or cloud storage; those are the only originals of your work.
 
 - The 10 videos in `source-photos/` are unused.
 
-- **`p86`–`p90` have no original in `source-photos/` yet.** They were cropped
-  from phone photos and written straight into `site/img/`. Until the five
-  `new-20251012-*.jpg` files are dropped into `source-photos/`, running
+- **`p86`–`p101` have no original in `source-photos/` yet.** They were cropped
+  from phone photos and written straight into `site/img/`. Until the sixteen
+  `new-2025…`/`new-2026…` files are dropped into `source-photos/`, running
   `tools/build_images.py` will wipe their images and print `!! no original`.
   The files to add are the *cropped* masters, not the uncropped phone frames —
   that is what keeps the framing.
 
 - `p88`, `p89` and `p90` were photographed through their packaging; the plastic
   shows. Worth reshooting unwrapped.
+
+- `p101` came through at 899px wide, where everything else is 1450px or more.
+  It is the softest image on the site — a sharper original would replace it
+  cleanly. Its plastic planters crowd the frame too.
