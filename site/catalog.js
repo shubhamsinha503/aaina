@@ -15,8 +15,7 @@ const CATALOG = [
     items: [
       { s: "p98", t: "Peacock Triptych · Indigo", p: 25000, k: "Three panels" },
       { s: "p97", t: "Peacock Panel · Cream and Green", p: 23000 },
-      { s: "p99", t: "Peacock Panel · Indigo", p: 11000 },
-      { s: "p45", t: "Mounted Panel with Torans", p: 3200 },
+      { s: "p45", t: "Mounted Panel with Torans", p: 9500 },
       { s: "p100", t: "Tulip Border Panel", p: 4000, k: "Single panel" }
     ]
   },
@@ -25,13 +24,12 @@ const CATALOG = [
     name: "Mirror Mandalas",
     blurb: "Unpainted, or nearly so. These are the pieces that live or die on how the mirrors are seated.",
     items: [
-      { s: "p44", t: "Mirror Mandala · Full Face", p: 4500 },
-      { s: "p38", t: "Mirror Mandala · Navy", p: 4200 },
-      { s: "p81", t: "Sunset Mandala", p: 3600 },
+      { s: "p44", t: "Mirror Mandala · Full Face 35\"", p: 8500 },
+      { s: "p81", t: "Sunset Mandala 25\"", p: 7500 },
       { s: "p26", t: "Krishna Silhouette · Indigo", p: 3200 },
       { s: "p48", t: "Turquoise Ring Mirror", p: 2400 },
-      { s: "p49", t: "Silver Lippan Mirror", p: 2400 },
-      { s: "p69", t: "White Lippan Mirror", p: 2400 }
+      { s: "p49", t: "Silver Lippan Mirror 35\"", p: 9500 },
+      { s: "p69", t: "White Lippan Mirror", p: 9500 }
     ]
   },
   {
@@ -95,7 +93,7 @@ const CATALOG = [
       { s: "p78", t: "Matki Trio", p: 2500, k: "Set of three" },
       { s: "p101", t: "Mirror Handi · Yellow", p: 1200 },
       { s: "p96", t: "Mirror Matki · Red and Gold", p: 1100 },
-      { s: "p20", t: "Matki as Planter", p: 1100 },
+      { s: "p20", t: "Matki as Planter", p: 1500 },
       { s: "p73", t: "Turquoise Matki", p: 950 }
     ]
   },
@@ -105,7 +103,7 @@ const CATALOG = [
     blurb: "Four coasters and a painted holder. The easiest thing here to buy several of, and the usual choice for favours.",
     items: [
       { s: "p93", t: "Coaster Sets · Five Colourways", p: 3800, k: "All five sets" },
-      { s: "p87", t: "Mirror Coaster Set", p: 850, k: "Set of four" },
+      { s: "p87", t: "Mirror Coaster Set", p: 850, k: "All five sets" },
       { s: "p94", t: "Coaster Set · Indigo", p: 850, k: "Set of four" }
     ]
   }

@@ -14,13 +14,6 @@ const WORKS=[
 "r": 1.7
 },
 {
-"s": "p99",
-"t": "Peacock Panel · Indigo",
-"c": "Hangings",
-"n": "The centre panel on its own — pale blue and teal plumes outlined in gold, with a red spine.",
-"r": 0.85
-},
-{
 "s": "p100",
 "t": "Tulip Border Panel",
 "c": "Hangings",
@@ -175,15 +168,8 @@ const WORKS=[
 "r": 0.75
 },
 {
-"s": "p38",
-"t": "Mirror Mandala · Navy",
-"c": "Mirror Work",
-"n": "Central mirror left bare so the piece reflects whatever room it hangs in.",
-"r": 0.75
-},
-{
 "s": "p44",
-"t": "Mirror Mandala · Full Face",
+"t": "Mirror Mandala · Full Face 35\"",
 "c": "Mirror Work",
 "n": "The largest of the navy series.",
 "r": 0.75
@@ -197,7 +183,7 @@ const WORKS=[
 },
 {
 "s": "p49",
-"t": "Silver Lippan Mirror",
+"t": "Silver Lippan Mirror 35\"",
 "c": "Mirror Work",
 "n": "Unpainted white relief on a mirrored ground — the most traditional palette here.",
 "r": 0.75
@@ -211,7 +197,7 @@ const WORKS=[
 },
 {
 "s": "p81",
-"t": "Sunset Mandala",
+"t": "Sunset Mandala 25\"",
 "c": "Mirror Work",
 "n": "Red through orange to yellow, ring by ring, with a mirror centre.",
 "r": 0.75
