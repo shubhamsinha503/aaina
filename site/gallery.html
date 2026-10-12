@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery · Aaina Lippan Studio</title>
+<meta name="description" content="Every lippan piece from the Aaina studio, photographed: mirror mandalas, painted thalis, festive rangoli sets, matkis, torans and framed panels.">
+<link rel="canonical" href="https://aaina.space/gallery.html">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#FDF1F3">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aaina Lippan Studio">
+<meta property="og:title" content="Gallery — Aaina lippan art">
+<meta property="og:description" content="Every lippan piece from the Aaina studio, photographed.">
+<meta property="og:url" content="https://aaina.space/gallery.html">
+<meta property="og:image" content="https://aaina.space/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gallery — Aaina lippan art">
+<meta name="twitter:description" content="Every lippan piece from the Aaina studio, photographed.">
+<meta name="twitter:image" content="https://aaina.space/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Hind+Vadodara:wght@400;600&family=Karla:wght@300;400;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body id="top">
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><b>Aaina</b><i>લિપ્પણ કામ</i></a>
+    <nav><ul>
+      <li><a href="index.html#catalogue">Catalogue</a></li>
+      <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+      <li><a href="index.html#process">Process</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#commission">Commission</a></li>
+    </ul></nav>
+    <a class="btn" href="index.html#commission" style="padding:12px 22px">Enquire</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="pagehead" style="padding-bottom:0">
+      <p class="eyebrow">The gallery</p>
+      <h1>Everything, photographed</h1>
+      <p>Every piece the studio has documented, including work already sold and a few shots from the table mid-make. Filter by family, or click any piece to see it full size. For what is currently for sale and what it costs, see the <a href="index.html#catalogue" style="color:var(--ink);border-bottom:1px solid var(--line)">catalogue</a>.</p>
+    </section>
+
+    <section id="work" style="padding-top:44px">
+      <div class="filters" id="filters"></div>
+      <p class="count" id="count"></p>
+      <div class="gallery" id="gallery"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap foot">
+      <div>Aaina · Lippan art studio</div>
+      <nav>
+        <a href="index.html#catalogue">Catalogue</a>
+        <a href="tel:+918929560625">+91 89295 60625</a>
+        <a href="https://wa.me/918929560625" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="mailto:shubhamsinha5033@gmail.com">Email</a>
+      </nav>
+    </div>
+  </footer>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Artwork detail">
+  <button class="lb-close" id="lbClose" aria-label="Close">&#10005;</button>
+  <div class="lb-inner">
+    <div class="lb-figure">
+      <picture>
+        <source id="lbSrc" type="image/webp" sizes="(max-width:900px) 92vw, 60vw">
+        <!-- 1x1 transparent placeholder: the real src is set when the lightbox
+             opens, and a src-less <img> is a broken image until then. -->
+        <img id="lbImg" alt=""
+             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+      </picture>
+    </div>
+    <div>
+      <p class="eyebrow" id="lbCat"></p>
+      <h2 id="lbTitle"></h2>
+      <p class="note" id="lbNote"></p>
+      <div class="lb-arrows">
+        <button id="lbPrev">&larr; Previous</button>
+        <button id="lbNext">Next &rarr;</button>
+      </div>
+      <p class="idx" id="lbIdx"></p>
+    </div>
+  </div>
+</div>
+
+<script src="works.js"></script>
+<script>
+const gallery=document.getElementById("gallery");
+/* Reveal on scroll. Cards start faded; anything the observer has not
+   reached within a second is shown anyway, so nothing can stay invisible. */
+const supportsIO = "IntersectionObserver" in window;
+const io = supportsIO ? new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}
+}),{threshold:0,rootMargin:"200px 0px 200px 0px"}) : null;
+function showAll(){document.querySelectorAll(".reveal:not(.in)").forEach(el=>el.classList.add("in"))}
+function observe(){
+  if(!io){showAll();return}
+  document.querySelectorAll(".reveal:not(.in)").forEach((el,i)=>{
+    el.style.transitionDelay=(i%6)*55+"ms"; io.observe(el);
+  });
+  clearTimeout(observe.t); observe.t=setTimeout(showAll,1000);
+}
+
+const cats=["All",...Array.from(new Set(WORKS.map(w=>w.c)))];
+let view=WORKS.slice();
+
+document.getElementById("filters").innerHTML=cats.map((c,i)=>
+  `<button class="chip" data-cat="${c}" aria-pressed="${i===0}">${c}</button>`).join("");
+
+function paint(cat){
+  view=cat==="All"?WORKS.slice():WORKS.filter(w=>w.c===cat);
+  document.getElementById("count").textContent=
+    view.length+(view.length===1?" piece":" pieces")+(cat==="All"?"":" · "+cat);
+  gallery.innerHTML=view.map((w,i)=>`
+    <button class="card reveal" data-i="${i}" aria-label="${w.t}">
+      <picture>
+        <source type="image/webp" sizes="(max-width:620px) 92vw, (max-width:1000px) 46vw, 400px"
+                srcset="img/thumb/${w.s}-400.webp 400w, img/thumb/${w.s}-800.webp 800w">
+        <img src="img/thumb/${w.s}.jpg" alt="${w.t}" loading="lazy" decoding="async" style="aspect-ratio:${w.r}">
+      </picture>
+      <span class="glint"></span>
+      <span class="meta"><span class="ttl">${w.t}</span><span class="cat">${w.c}</span></span>
+    </button>`).join("");
+  observe();
+}
+
+function select(cat){
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.cat===cat)));
+  paint(cat);
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  select(b.dataset.cat);
+  /* Keep the URL shareable without firing hashchange and repainting twice. */
+  history.replaceState(null,"",b.dataset.cat==="All"?location.pathname:"#"+encodeURIComponent(b.dataset.cat));
+});
+
+/* A category can be pre-selected by URL: gallery.html#Matki. Read it on load
+   AND on hashchange — a link to a different hash on this same page is a
+   same-document navigation, so without the listener nothing would happen. */
+function fromHash(){
+  const wanted=decodeURIComponent(location.hash.slice(1));
+  return cats.find(c=>c.toLowerCase()===wanted.toLowerCase())||"All";
+}
+select(fromHash());
+addEventListener("hashchange",()=>select(fromHash()));
+
+/* lightbox */
+const lb=document.getElementById("lb"); let cur=0;
+function open(i){
+  cur=(i+view.length)%view.length; const w=view[cur];
+  const img=document.getElementById("lbImg");
+  document.getElementById("lbSrc").srcset=
+    `img/full/${w.s}-1100.webp 1100w, img/full/${w.s}-1800.webp 1800w`;
+  img.src="img/full/"+w.s+".jpg"; img.alt=w.t;
+  document.getElementById("lbCat").textContent=w.c;
+  document.getElementById("lbTitle").textContent=w.t;
+  document.getElementById("lbNote").textContent=w.n;
+  document.getElementById("lbIdx").textContent=(cur+1)+" / "+view.length;
+  lb.classList.add("open"); document.body.style.overflow="hidden";
+}
+function close(){lb.classList.remove("open"); document.body.style.overflow="";}
+gallery.addEventListener("click",e=>{const c=e.target.closest(".card"); if(c) open(+c.dataset.i)});
+document.getElementById("lbClose").onclick=close;
+document.getElementById("lbPrev").onclick=()=>open(cur-1);
+document.getElementById("lbNext").onclick=()=>open(cur+1);
+lb.addEventListener("click",e=>{if(e.target===lb) close()});
+addEventListener("keydown",e=>{
+  if(!lb.classList.contains("open")) return;
+  if(e.key==="Escape") close();
+  else if(e.key==="ArrowRight") open(cur+1);
+  else if(e.key==="ArrowLeft") open(cur-1);
+});
+</script>
+</body>
+</html>

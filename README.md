@@ -34,12 +34,29 @@ browser, offline, exactly as it will look live.
 
 ## What to edit, for what
 
+The site is two pages. **`index.html`** is the shopfront: hero, the priced
+catalogue, bulk discounts, process, about, commission. **`gallery.html`** is
+every photograph, filterable, with the lightbox. They share `style.css`.
+
 | You want to change | Edit this |
 |---|---|
-| A title, category or caption | `site/works.js` |
-| Headline, About text, prices, email | `site/index.html` |
+| **A price** | `site/catalog.js` — one number per item |
+| **Bulk discount tiers** | the `BULK` list at the bottom of `site/catalog.js` |
+| What is for sale, and in which line | `site/catalog.js` |
+| A title, category or caption in the gallery | `site/works.js` |
+| Headline, About text, email | `site/index.html` |
+| Colours, type, spacing — anything visual | `site/style.css` |
 | Gallery order | move lines around in `site/works.js` |
-| Remove a piece | delete its line from `site/works.js` |
+| Remove a piece from the gallery | delete its line from `site/works.js` |
+
+`works.js` and `catalog.js` are deliberately separate lists. The gallery shows
+every photograph, including studio shots and second views of one object; the
+catalogue shows one entry per sellable thing. Seven of the 59 photographs are
+therefore not in the catalogue, on purpose.
+
+Line totals and price ranges on the page are computed from `catalog.js`, so
+they cannot drift out of step with the items. Change a price and the range in
+that line's header, and the "from ₹…" row in the Commission panel, both follow.
 
 ### works.js — one line per piece
 
@@ -86,8 +103,11 @@ Needs: `python -m pip install pillow pillow-heif`
 
 ```
 site/                   the website — this is what Vercel publishes
-  index.html            markup, styling, behaviour, head and social tags
-  works.js              the 59 pieces
+  index.html            home + the priced catalogue
+  gallery.html          every photograph, filterable, with the lightbox
+  style.css             all styling, shared by both pages
+  catalog.js            what is for sale: 7 lines, 52 items, prices, bulk tiers
+  works.js              the 59 photographs
   img/thumb/            grid images     — WebP 400/800px + a 600px JPEG fallback
   img/full/             lightbox images — WebP 1100/1800px + a 1200px JPEG fallback
   img/about/            the artist portrait in the About section. Hand-made, NOT
@@ -132,7 +152,17 @@ an external drive or cloud storage; those are the only originals of your work.
 - **Every title and caption was written by Claude from looking at the photos** —
   sizes, mirror counts and dates included. They read plausibly but they are
   guesses, not records. Same for the About text.
-- **`Aaina`** as the studio name.
+
+- **Every price in `catalog.js` is an estimate, not a rate you set.** They were
+  pitched against what comparable handmade lippan sells for online in India
+  (roughly ₹640–1,300 small, ₹1,300–2,250 at 10–12in, ~₹2,550 at 14in, ₹3,000+
+  above that) and then spread by how much work each piece looks like. No piece
+  has been measured. The page says they are indicative and invites a message
+  for an exact quote, but they are the first thing to replace with real numbers.
+
+- The bulk discount tiers (10/15/20%) are likewise conventional, not yours.
+
+- `Aaina` as the studio name is **approved** — confirmed 12 Oct 2026.
 
 - The 10 videos in `source-photos/` are unused.
 

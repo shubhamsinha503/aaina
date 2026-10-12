@@ -12,3 +12,8 @@ manifest.json
 __pycache__/
 .DS_Store
 Thumbs.db
+
+# Installed agent skills — tooling, not site content. skills-lock.json IS
+# committed, so `npx skills add pbakaus/impeccable` restores them anywhere.
+.agents/
+.claude/
