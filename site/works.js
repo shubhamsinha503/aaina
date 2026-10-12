@@ -32,7 +32,7 @@ const WORKS=[
 "t": "Lotus Thali · Maroon and Green",
 "c": "Thali",
 "n": "Three red lotuses on a cream ground, ringed by zigzag and chequer bands in maroon and deep green.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p92",
@@ -60,21 +60,21 @@ const WORKS=[
 "t": "Coaster Sets · Five Colourways",
 "c": "Coasters",
 "n": "Five sets laid out together — orange, pink, red and blue, each with a mirrored rosette on the top coaster.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p94",
 "t": "Coaster Set · Indigo",
 "c": "Coasters",
 "n": "A mirrored rosette on the top coaster, in a painted holder with a cut-out front.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p95",
 "t": "Coaster Sets · Stacked",
 "c": "Coasters",
 "n": "Holders in orange, blue and red, the nearest one open to show the coaster inside.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p86",
@@ -88,28 +88,28 @@ const WORKS=[
 "t": "Ganesh Thali · Indigo and Rose",
 "c": "Thali",
 "n": "Concentric bands of mirror — scallops, discs and leaf shapes — ringing a Ganesh on a yellow ground.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p89",
 "t": "Shri Ram Thali",
 "c": "Thali",
 "n": "A ring of lotus petals in indigo, rose and green around a white centre lettered श्री राम.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p90",
 "t": "Sunflower Thali",
 "c": "Thali",
 "n": "Two rounds of petals in yellow and ochre radiating from a central mirror, on a white ground edged with mirror dots.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p87",
 "t": "Mirror Coaster Set",
 "c": "Coasters",
 "n": "Coasters and a matching holder in deep red, the top face set with a mirror flower inside a ring of round mirrors.",
-"r": 1.0
+"r": 1
 },
 {
 "s": "p08",
