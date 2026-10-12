@@ -90,6 +90,9 @@ site/                   the website — this is what Vercel publishes
   works.js              the 48 pieces
   img/thumb/            grid images     — WebP 400/800px + a 600px JPEG fallback
   img/full/             lightbox images — WebP 1100/1800px + a 1200px JPEG fallback
+  img/about/            the artist portrait in the About section. Hand-made, NOT
+                        rebuilt by build_images.py — and not wiped by it either,
+                        which is exactly why it lives outside thumb/ and full/
   og-image.jpg          link preview card for WhatsApp/Instagram
   favicon.ico, apple-touch-icon.png
   robots.txt, sitemap.xml
