@@ -79,6 +79,52 @@ email appears twice: the commission button and the footer.
 
 ---
 
+## The studio dashboard
+
+**<https://aaina.space/studio.html>** — add listings, change prices, remove
+pieces, and publish, without touching code or asking anyone.
+
+It is not linked from the site and is excluded in `robots.txt`, so it will not
+appear in search or in the menus. Anyone who knows the address can open it, but
+opening it is all they can do.
+
+### Unlocking it
+
+The lock is a **GitHub token**, not a password. A password checked inside the
+page could be read by anyone who opened the file; a token is checked by GitHub,
+so without one the page cannot change anything no matter what is typed into it.
+
+1. github.com → Settings → Developer settings → Personal access tokens →
+   **Fine-grained tokens**
+2. Generate one with access to **only** `shubhamsinha503/aaina`
+3. Repository permissions → **Contents: Read and write**. Nothing else.
+4. Paste it into the dashboard. It is kept in that browser and sent only to
+   GitHub.
+
+Set an expiry you are comfortable with. When it lapses the dashboard will say
+the key was rejected; generate another and paste it in. **Lock** forgets it.
+
+### What pressing Publish does
+
+One git commit containing the edited `catalog.js`, the edited `works.js`, and
+every image file for any new listing. Vercel sees the commit and rebuilds, so
+the change is live in a few minutes. Nothing is written until Publish, and if
+the commit fails nothing is written at all — it is one atomic commit, never a
+half-applied change.
+
+A new photo is cropped to the chosen shape in the browser and rendered into the
+six files the site serves (`thumb` 400/800 WebP + 600 JPEG, `full` 1100/1800
+WebP + 1200 JPEG), plus a full-size master into `masters/` at the repo root.
+`masters/` is committed but not published, so the good copy of a photo is never
+only a compressed variant.
+
+### If two people edit at once
+
+The second Publish fails with a branch conflict rather than overwriting the
+first. Press **Reload from site** and redo that change.
+
+---
+
 ## Adding new photos
 
 1. Put them in `source-photos/`
@@ -105,6 +151,7 @@ Needs: `python -m pip install pillow pillow-heif`
 site/                   the website — this is what Vercel publishes
   index.html            home + the priced catalogue
   gallery.html          every photograph, filterable, with the lightbox
+  studio.html           the dashboard — unlinked, noindex, GitHub token to use
   style.css             all styling, shared by both pages
   catalog.js            what is for sale: 7 lines, 52 items, prices, bulk tiers
   works.js              the 59 photographs
@@ -116,6 +163,8 @@ site/                   the website — this is what Vercel publishes
   og-image.jpg          link preview card for WhatsApp/Instagram
   favicon.ico, apple-touch-icon.png
   robots.txt, sitemap.xml
+masters/                full-size crops of anything added through the dashboard.
+                        Committed, NOT published. The only full copy of those photos.
 source-photos/          your original HEIC/JPG/MP4 files — NOT in git, see below
 tools/                  build_images.py (rebuilds all image sizes),
                         build_works.py, convert.py (legacy)

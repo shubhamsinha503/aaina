@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio · Aaina</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<meta name="theme-color" content="#F6F7F9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&display=swap">
+<style>
+/* Operate-mode surface. Deliberately NOT style.css: this is a tool, so it uses
+   one sans family, a fixed scale, and restrained colour. The brand's display
+   face and blush ground stay on the public pages. */
+:root{
+  --bg:#F4F6F8;          /* app canvas */
+  --surface:#FFFFFF;     /* cards, rows, bar */
+  --sunk:#EDF1F5;        /* second neutral: toolbars, table head, inputs */
+  --ink:#232B40;
+  --dim:#56607A;
+  --line:#D9E0E8;
+  --line-2:#C3CDD8;
+  --accent:#2C74A1;      /* primary action, selection, focus */
+  --accent-sunk:#E7F0F6;
+  --danger:#A3303F;
+  --danger-sunk:#FBECEE;
+  --ok:#1F7A54;
+  --ok-sunk:#E6F4EE;
+  --warn-sunk:#FDF4E3;
+  --warn-line:#E0B55F;
+  --r:6px;
+  --f:"Karla",-apple-system,"Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+/* Must come before .btn: an author `display` on a class beats the UA
+   stylesheet's [hidden] rule, so hidden buttons would otherwise still show. */
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:600;line-height:1.25}
+h1{font-size:18px}
+h2{font-size:16px}
+h3{font-size:14px}
+p{margin:0}
+img{display:block;max-width:100%}
+input,select,button,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── bar ─────────────────────────────── */
+.bar{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;padding:12px 20px}
+.bar .name{font-weight:700;letter-spacing:.01em}
+.bar .name span{color:var(--dim);font-weight:500}
+.bar .spacer{flex:1}
+.pill{font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;background:var(--sunk);color:var(--dim)}
+.pill.dirty{background:var(--warn-sunk);color:#7A5A12;box-shadow:inset 0 0 0 1px var(--warn-line)}
+.pill.ok{background:var(--ok-sunk);color:var(--ok)}
+
+/* ── buttons ─────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:600;
+  padding:8px 15px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--surface);
+  cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.btn:hover:not(:disabled){background:var(--sunk);border-color:var(--dim)}
+.btn:active:not(:disabled){background:var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover:not(:disabled){background:#246089;border-color:#246089}
+.btn.primary:active:not(:disabled){background:#1E5273}
+.btn.danger{color:var(--danger);border-color:var(--line-2)}
+.btn.danger:hover:not(:disabled){background:var(--danger-sunk);border-color:var(--danger)}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn .spin{width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── layout ──────────────────────────── */
+.page{max-width:1200px;margin:0 auto;padding:22px 20px 80px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:18px}
+.panel>header{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.panel>header .spacer{flex:1}
+.panel>.pad{padding:16px}
+.hint{color:var(--dim);font-size:13px}
+
+/* ── unlock ──────────────────────────── */
+.gate{max-width:560px;margin:56px auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.gate h1{margin-bottom:8px}
+.gate ol{margin:14px 0 18px;padding-left:20px;color:var(--dim);font-size:13px}
+.gate li{margin-bottom:5px}
+.gate li b{color:var(--ink)}
+.field{display:block;margin-bottom:12px}
+.field>span{display:block;font-size:12px;font-weight:600;color:var(--dim);margin-bottom:5px}
+input[type=text],input[type=password],input[type=number],select,textarea{
+  width:100%;padding:8px 10px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--sunk);
+  transition:border-color .15s,background .15s}
+input:hover:not(:disabled),select:hover:not(:disabled){border-color:var(--dim)}
+input:focus,select:focus,textarea:focus{background:var(--surface);border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-sunk)}
+input:disabled,select:disabled{opacity:.55;cursor:not-allowed}
+
+/* ── messages ────────────────────────── */
+.msg{border-radius:var(--r);padding:11px 14px;font-size:13px;margin-bottom:14px;border:1px solid}
+.msg.err{background:var(--danger-sunk);border-color:#E4B2B9;color:#7A2430}
+.msg.ok{background:var(--ok-sunk);border-color:#A8D7C2;color:#14563A}
+.msg.info{background:var(--accent-sunk);border-color:#B6D4E6;color:#1E5273}
+.msg a{color:inherit}
+
+/* ── table ───────────────────────────── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);
+  background:var(--sunk);padding:8px 12px;border-bottom:1px solid var(--line);font-weight:600;position:sticky;top:57px;z-index:5}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr.changed td{background:#FFFBF0}
+.tbl tr.gone td{background:var(--danger-sunk);opacity:.6}
+.tbl tr.gone input,.tbl tr.gone select{text-decoration:line-through}
+.tbl img{width:44px;height:44px;object-fit:cover;border-radius:4px;background:var(--sunk);border:1px solid var(--line)}
+.tbl .c-img{width:60px}
+.tbl .c-price{width:120px}
+.tbl .c-line{width:190px}
+.tbl .c-kick{width:150px}
+.tbl .c-act{width:92px;text-align:right}
+.rupee{position:relative}
+.rupee input{padding-left:22px}
+.rupee::before{content:"\20B9";position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:13px;pointer-events:none}
+.slug{font-size:11px;color:var(--dim)}
+
+/* ── skeleton ────────────────────────── */
+.sk{background:linear-gradient(90deg,var(--sunk) 25%,#E3E9EF 50%,var(--sunk) 75%);background-size:200% 100%;
+  animation:sheen 1.3s linear infinite;border-radius:4px;height:14px}
+@keyframes sheen{to{background-position:-200% 0}}
+.sk.img{width:44px;height:44px}
+
+/* ── empty ───────────────────────────── */
+.empty{padding:40px 24px;text-align:center;color:var(--dim)}
+.empty h3{color:var(--ink);margin-bottom:6px}
+
+/* ── add listing ─────────────────────── */
+.add{display:grid;grid-template-columns:200px 1fr;gap:18px}
+.drop{border:1.5px dashed var(--line-2);border-radius:var(--r);background:var(--sunk);aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;cursor:pointer;
+  color:var(--dim);font-size:12.5px;transition:border-color .15s,background .15s;position:relative;overflow:hidden}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-sunk);color:var(--accent)}
+.drop canvas,.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.add{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+
+/* ── publish log ─────────────────────── */
+.log{font-size:12.5px;color:var(--dim);margin-top:10px;max-height:190px;overflow:auto}
+.log div{padding:3px 0;border-bottom:1px solid var(--line)}
+.log div:last-child{border-bottom:0}
+.log b{color:var(--ink);font-weight:600}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media(max-width:820px){
+  .tbl .c-kick,.tbl thead .c-kick{display:none}
+  .tbl td,.tbl th{padding:7px 8px}
+  .page{padding:16px 12px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="name">Aaina <span>· studio</span></div>
+  <span class="pill" id="state">Locked</span>
+  <div class="spacer"></div>
+  <button class="btn sm" id="btnReload" hidden>Reload from site</button>
+  <button class="btn primary" id="btnPublish" hidden disabled>Publish</button>
+  <button class="btn sm" id="btnLock" hidden>Lock</button>
+</div>
+
+<!-- ── unlock ─────────────────────────────────────────── -->
+<section class="gate" id="gate">
+  <h1>Unlock the studio</h1>
+  <p class="hint">This page edits the real shop. It needs a publishing key before it can change anything.</p>
+  <div id="gateMsg"></div>
+  <ol>
+    <li>Open <b>github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens</b></li>
+    <li>Generate a token with access to <b>only</b> the <b>shubhamsinha503/aaina</b> repository</li>
+    <li>Under Repository permissions set <b>Contents: Read and write</b>. Nothing else is needed.</li>
+    <li>Paste it below. It is stored in this browser only, never sent anywhere except GitHub.</li>
+  </ol>
+  <label class="field">
+    <span>Publishing key</span>
+    <input type="password" id="tok" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+  </label>
+  <label class="field" style="display:flex;gap:8px;align-items:center">
+    <input type="checkbox" id="remember" checked style="width:auto">
+    <span style="margin:0;font-weight:500;color:var(--ink)">Remember on this device</span>
+  </label>
+  <button class="btn primary" id="btnUnlock">Unlock</button>
+</section>
+
+<!-- ── app ────────────────────────────────────────────── -->
+<main class="page" id="app" hidden>
+  <div id="banner"></div>
+
+  <section class="panel">
+    <header>
+      <h2>Add a listing</h2>
+      <div class="spacer"></div>
+      <span class="hint" id="nextSlug"></span>
+    </header>
+    <div class="pad">
+      <div class="add">
+        <div>
+          <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose a photo">
+            <span id="dropLabel">Click, or drop a photo here</span>
+            <canvas id="prev" hidden></canvas>
+          </div>
+          <input type="file" id="file" accept="image/*" class="sr">
+          <label class="field" style="margin-top:10px">
+            <span>Shape</span>
+            <select id="ratio">
+              <option value="1">Square</option>
+              <option value="0.8">Portrait 4:5</option>
+              <option value="0.75">Portrait 3:4</option>
+              <option value="1.33">Landscape 4:3</option>
+              <option value="1.7">Wide 16:9</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <div class="grid2">
+            <label class="field"><span>Name</span><input type="text" id="nName" placeholder="Lotus Thali · Blue"></label>
+            <label class="field"><span>Line</span><select id="nLine"></select></label>
+            <label class="field"><span>Price</span><div class="rupee"><input type="number" id="nPrice" min="0" step="50" placeholder="2400"></div></label>
+            <label class="field"><span>Set label <span style="font-weight:400">(optional)</span></span><input type="text" id="nKick" placeholder="Set of four"></label>
+          </div>
+          <label class="field"><span>Gallery caption</span><textarea id="nNote" rows="2" placeholder="What someone sees: colours, shapes, how it is arranged."></textarea></label>
+          <label class="field"><span>Gallery category</span><select id="nCat"></select></label>
+          <button class="btn primary" id="btnAdd" disabled>Add listing</button>
+          <span class="hint" id="addHint" style="margin-left:10px"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <header>
+      <h2>Listings</h2>
+      <span class="pill" id="countPill">—</span>
+      <div class="spacer"></div>
+      <span class="hint">Edit any field. Nothing changes on the site until you press Publish.</span>
+    </header>
+    <div id="tableWrap"></div>
+  </section>
+</main>
+
+<script>
+/* ────────────────────────────────────────────────────────────────────────
+   Aaina studio dashboard.
+
+   No backend. The page reads the two data files straight off the live site,
+   lets you edit them, renders new photos into the six sizes the site asks
+   for, and writes everything back as ONE git commit through the GitHub API.
+   Vercel sees the commit and redeploys.
+
+   The GitHub token is the only lock. A passcode checked in this file would be
+   readable by anyone who opened it; the token is enforced by GitHub, so a
+   visitor without one cannot change anything no matter what they do here.
+   ──────────────────────────────────────────────────────────────────────── */
+
+const OWNER = "shubhamsinha503", REPO = "aaina", BRANCH = "main";
+const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
+const SITE = location.origin + location.pathname.replace(/studio\.html$/, "");
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const rs  = n => "₹" + Number(n).toLocaleString("en-IN");
+
+let TOKEN = null;
+let catalog = null, works = null;   // live data
+let baseline = "";                  // JSON snapshot to diff against
+let pending = new Map();            // slug -> {files:[{path,blob}], }
+let removed = new Set();
+
+/* ── unlock ─────────────────────────────────────────── */
+function msg(el, kind, html){ el.innerHTML = `<div class="msg ${kind}">${html}</div>`; }
+
+$("btnUnlock").onclick = async () => {
+  const b = $("btnUnlock"), t = $("tok").value.trim();
+  if (!t) { msg($("gateMsg"), "err", "Paste a key first."); return; }
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Checking';
+  try {
+    const r = await fetch(`${API}`, { headers: { Authorization: "Bearer " + t, Accept: "application/vnd.github+json" } });
+    if (r.status === 401) throw new Error("GitHub rejected that key. Check it was copied whole and has not expired.");
+    if (r.status === 403 || r.status === 404) throw new Error("That key cannot reach this repository. Make sure it grants <b>Contents: Read and write</b> on <b>" + OWNER + "/" + REPO + "</b>.");
+    if (!r.ok) throw new Error("GitHub returned " + r.status + ".");
+    const repo = await r.json();
+    if (!repo.permissions || !repo.permissions.push) throw new Error("That key can read the repository but not write to it. It needs <b>Contents: Read and write</b>.");
+    TOKEN = t;
+    if ($("remember").checked) localStorage.setItem("aaina.key", t);
+    $("gate").hidden = true; $("app").hidden = false;
+    ["btnPublish","btnLock","btnReload"].forEach(i => $(i).hidden = false);
+    await load();
+  } catch (e) {
+    msg($("gateMsg"), "err", e.message);
+  } finally { b.disabled = false; b.textContent = "Unlock"; }
+};
+$("tok").addEventListener("keydown", e => { if (e.key === "Enter") $("btnUnlock").click(); });
+
+$("btnLock").onclick = () => {
+  if (dirtyCount() && !confirm("You have unpublished changes. Lock anyway and lose them?")) return;
+  localStorage.removeItem("aaina.key"); location.reload();
+};
+
+/* ── load ───────────────────────────────────────────── */
+function skeleton(n){
+  $("tableWrap").innerHTML = `<table class="tbl"><tbody>${
+    Array.from({length:n},()=>`<tr><td class="c-img"><div class="sk img"></div></td>
+      <td><div class="sk" style="width:60%"></div></td><td><div class="sk" style="width:80%"></div></td>
+      <td><div class="sk" style="width:70%"></div></td><td><div class="sk" style="width:50%"></div></td>
+      <td class="c-act"><div class="sk" style="width:60px;margin-left:auto"></div></td></tr>`).join("")}</tbody></table>`;
+}
+
+async function load(){
+  skeleton(8);
+  $("state").textContent = "Loading"; $("state").className = "pill";
+  try {
+    const bust = "?v=" + Date.now();
+    const [cSrc, wSrc] = await Promise.all([
+      fetch(SITE + "catalog.js" + bust).then(r => { if(!r.ok) throw new Error("catalog.js returned " + r.status); return r.text(); }),
+      fetch(SITE + "works.js"  + bust).then(r => { if(!r.ok) throw new Error("works.js returned "  + r.status); return r.text(); })
+    ]);
+    const out = new Function(cSrc + "\n" + wSrc + "\n; return {CATALOG, BULK, WORKS};")();
+    catalog = out.CATALOG; works = out.WORKS; window.BULK = out.BULK;
+    baseline = snapshot();
+    pending.clear(); removed.clear();
+    fillSelects(); render(); markClean();
+    $("banner").innerHTML = "";
+  } catch (e) {
+    $("tableWrap").innerHTML = "";
+    msg($("banner"), "err", "Could not read the shop's current data. " + esc(e.message) + " Try <b>Reload from site</b>.");
+    $("state").textContent = "Error"; $("state").className = "pill";
+  }
+}
+$("btnReload").onclick = () => {
+  if (dirtyCount() && !confirm("Discard your unpublished changes and reload?")) return;
+  load();
+};
+
+const snapshot = () => JSON.stringify({c: catalog, w: works});
+function dirtyCount(){
+  if (!catalog) return 0;
+  let n = pending.size + removed.size;
+  if (snapshot() !== baseline) n = Math.max(n, 1);
+  return n;
+}
+function markDirty(){
+  const n = dirtyCount();
+  $("state").textContent = n ? "Unpublished changes" : "Up to date";
+  $("state").className = "pill " + (n ? "dirty" : "ok");
+  $("btnPublish").disabled = !n;
+  $("btnPublish").textContent = n ? "Publish" : "Publish";
+}
+const markClean = () => markDirty();
+
+function fillSelects(){
+  $("nLine").innerHTML = catalog.map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join("");
+  const cats = [...new Set(works.map(w => w.c))];
+  $("nCat").innerHTML = cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  $("nextSlug").textContent = "Next slug: " + nextSlug();
+}
+function nextSlug(){
+  const n = Math.max(0, ...works.map(w => +(w.s.match(/^p(\d+)$/)?.[1] || 0)),
+                        ...catalog.flatMap(l => l.items.map(i => +(i.s.match(/^p(\d+)$/)?.[1] || 0))));
+  return "p" + (n + 1);
+}
+
+/* ── render ─────────────────────────────────────────── */
+function render(){
+  const rows = catalog.flatMap(l => l.items.map(i => ({ ...i, line: l.id })));
+  $("countPill").textContent = rows.length + " items";
+  if (!rows.length){
+    $("tableWrap").innerHTML = `<div class="empty"><h3>No listings yet</h3>
+      <p>Add the first one above. It will appear on the shop the moment you publish.</p></div>`;
+    return;
+  }
+  const lineOpts = s => catalog.map(l => `<option value="${esc(l.id)}"${l.id===s?" selected":""}>${esc(l.name)}</option>`).join("");
+  $("tableWrap").innerHTML = `<table class="tbl">
+    <thead><tr><th class="c-img"><span class="sr">Photo</span></th><th>Name</th><th class="c-line">Line</th>
+      <th class="c-price">Price</th><th class="c-kick">Set label</th><th class="c-act"><span class="sr">Actions</span></th></tr></thead>
+    <tbody>${rows.map(r => {
+      const isNew = pending.has(r.s), isGone = removed.has(r.s);
+      const src = isNew ? pending.get(r.s).thumbURL : `img/thumb/${r.s}.jpg`;
+      return `<tr data-s="${r.s}" class="${isGone?"gone":(isNew?"changed":"")}">
+        <td class="c-img"><img src="${src}" alt="" loading="lazy"></td>
+        <td><input type="text" data-f="t" value="${esc(r.t)}"><div class="slug">${r.s}${isNew?" · new":""}</div></td>
+        <td class="c-line"><select data-f="line">${lineOpts(r.line)}</select></td>
+        <td class="c-price"><div class="rupee"><input type="number" data-f="p" min="0" step="50" value="${r.p}"></div></td>
+        <td class="c-kick"><input type="text" data-f="k" value="${esc(r.k||"")}" placeholder="—"></td>
+        <td class="c-act"><button class="btn sm danger" data-act="${isGone?"undo":"del"}">${isGone?"Undo":"Remove"}</button></td>
+      </tr>`; }).join("")}</tbody></table>`;
+}
+
+$("tableWrap").addEventListener("input", e => {
+  const tr = e.target.closest("tr"); if (!tr) return;
+  const slug = tr.dataset.s, f = e.target.dataset.f;
+  const loc = findItem(slug); if (!loc) return;
+  if (f === "line"){
+    const [l, idx] = loc; const [it] = l.items.splice(idx, 1);
+    catalog.find(x => x.id === e.target.value).items.push(it);
+    render();
+  } else {
+    const it = loc[0].items[loc[1]];
+    if (f === "p") it.p = Math.max(0, +e.target.value || 0);
+    else if (f === "k"){ const v = e.target.value.trim(); if (v) it.k = v; else delete it.k; }
+    else it[f] = e.target.value;
+    const w = works.find(w => w.s === slug); if (w && f === "t") w.t = e.target.value;
+    tr.classList.add("changed");
+  }
+  markDirty();
+});
+
+$("tableWrap").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"); if (!b) return;
+  const slug = b.closest("tr").dataset.s;
+  if (b.dataset.act === "del") removed.add(slug); else removed.delete(slug);
+  render(); markDirty();
+});
+
+function findItem(slug){
+  for (const l of catalog){ const i = l.items.findIndex(x => x.s === slug); if (i > -1) return [l, i]; }
+  return null;
+}
+
+/* ── photo → the six sizes the site serves ──────────── */
+const GRID = [400, 800], FULL = [1100, 1800], JPEG_GRID = 600, JPEG_FULL = 1200;
+let picked = null;   // {bitmap, name}
+
+$("drop").onclick = () => $("file").click();
+$("drop").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("file").click(); } };
+["dragenter","dragover"].forEach(ev => $("drop").addEventListener(ev, e => { e.preventDefault(); $("drop").classList.add("over"); }));
+["dragleave","drop"].forEach(ev => $("drop").addEventListener(ev, e => { e.preventDefault(); $("drop").classList.remove("over"); }));
+$("drop").addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) take(f); });
+$("file").onchange = e => { const f = e.target.files[0]; if (f) take(f); };
+$("ratio").onchange = () => picked && preview();
+
+async function take(file){
+  if (!file.type.startsWith("image/")) { $("addHint").textContent = "That is not an image file."; return; }
+  try {
+    picked = { bitmap: await createImageBitmap(file), name: file.name };
+    $("dropLabel").hidden = true; $("prev").hidden = false;
+    preview(); check();
+  } catch { $("addHint").textContent = "That image could not be read."; }
+}
+function cropRect(bm, ratio){
+  const W = bm.width, H = bm.height;
+  let w = W, h = Math.round(W / ratio);
+  if (h > H) { h = H; w = Math.round(H * ratio); }
+  return { x: Math.round((W - w) / 2), y: Math.round((H - h) / 2), w, h };
+}
+function preview(){
+  const ratio = +$("ratio").value, { x, y, w, h } = cropRect(picked.bitmap, ratio);
+  const c = $("prev"), S = 400;
+  c.width = S; c.height = Math.round(S / ratio);
+  c.getContext("2d").drawImage(picked.bitmap, x, y, w, h, 0, 0, c.width, c.height);
+}
+function draw(bm, rect, outW, outH){
+  const c = document.createElement("canvas"); c.width = outW; c.height = outH;
+  const g = c.getContext("2d"); g.imageSmoothingQuality = "high";
+  g.drawImage(bm, rect.x, rect.y, rect.w, rect.h, 0, 0, outW, outH);
+  return c;
+}
+const toBlob = (c, type, q) => new Promise(res => c.toBlob(res, type, q));
+
+async function renderVariants(bm, ratio, slug){
+  const rect = cropRect(bm, ratio), out = [];
+  const at = w => { const ww = Math.min(w, rect.w); return [ww, Math.round(ww / ratio)]; };
+  for (const [widths, folder, jw] of [[GRID, "thumb", JPEG_GRID], [FULL, "full", JPEG_FULL]]){
+    for (const want of widths){
+      const [w, h] = at(want);
+      out.push({ path: `site/img/${folder}/${slug}-${want}.webp`, blob: await toBlob(draw(bm, rect, w, h), "image/webp", .8) });
+    }
+    const [w, h] = at(jw);
+    out.push({ path: `site/img/${folder}/${slug}.jpg`, blob: await toBlob(draw(bm, rect, w, h), "image/jpeg", .84) });
+  }
+  // A master outside site/ so the photo is never only a compressed variant.
+  const [mw, mh] = at(2000);
+  out.push({ path: `masters/${slug}.jpg`, blob: await toBlob(draw(bm, rect, mw, mh), "image/jpeg", .92) });
+  return { files: out, ratio: +(rect.w / rect.h).toFixed(3) };
+}
+
+["nName","nPrice"].forEach(i => $(i).addEventListener("input", check));
+function check(){
+  const ok = picked && $("nName").value.trim() && +$("nPrice").value > 0;
+  $("btnAdd").disabled = !ok;
+  $("addHint").textContent = ok ? "" : (picked ? "Name and price needed." : "Choose a photo to start.");
+}
+check();
+
+$("btnAdd").onclick = async () => {
+  const b = $("btnAdd"); b.disabled = true; b.innerHTML = '<span class="spin"></span>Rendering';
+  try {
+    const slug = nextSlug(), ratio = +$("ratio").value;
+    const { files, ratio: r } = await renderVariants(picked.bitmap, ratio, slug);
+    const item = { s: slug, t: $("nName").value.trim(), p: +$("nPrice").value };
+    const k = $("nKick").value.trim(); if (k) item.k = k;
+    catalog.find(l => l.id === $("nLine").value).items.push(item);
+    works.unshift({ s: slug, t: item.t, c: $("nCat").value,
+                    n: $("nNote").value.trim() || item.t, r });
+    const thumbURL = URL.createObjectURL(files.find(f => f.path.endsWith("thumb/" + slug + ".jpg")).blob);
+    pending.set(slug, { files, thumbURL });
+    picked = null; $("file").value = ""; $("prev").hidden = true; $("dropLabel").hidden = false;
+    ["nName","nPrice","nKick","nNote"].forEach(i => $(i).value = "");
+    fillSelects(); render(); markDirty(); check();
+    msg($("banner"), "ok", `<b>${slug}</b> added with ${files.length} image files rendered. It is not on the site yet — press <b>Publish</b>.`);
+  } catch (e) {
+    msg($("banner"), "err", "Could not prepare that photo: " + esc(e.message));
+  } finally { b.innerHTML = "Add listing"; check(); }
+};
+
+/* ── serialise ──────────────────────────────────────── */
+const q = s => JSON.stringify(String(s));
+function catalogSrc(){
+  const live = catalog.map(l => ({ ...l, items: l.items.filter(i => !removed.has(i.s)) }))
+                      .filter(l => l.items.length);
+  return `/* The catalogue: what is actually for sale, grouped into lines.
+ *
+ * Written by the studio dashboard (studio.html). Safe to edit by hand too —
+ * it is plain data. The gallery list lives separately in works.js.
+ *
+ *   s  slug (which image)   t  name   p  price in rupees   k  optional set label
+ *
+ * Prices are the studio's own. Edit freely; the page recomputes every range.
+ */
+const CATALOG = [
+${live.map(l => `  {
+    id: ${q(l.id)},
+    name: ${q(l.name)},
+    blurb: ${q(l.blurb)},
+    items: [
+${l.items.map(i => `      { s: ${q(i.s)}, t: ${q(i.t)}, p: ${i.p}${i.k ? `, k: ${q(i.k)}` : ""} }`).join(",\n")}
+    ]
+  }`).join(",\n")}
+];
+
+/* Bulk pricing. Shown as a table and used nowhere else. */
+const BULK = ${JSON.stringify(window.BULK, null, 2).replace(/\n/g, "\n")};
+`;
+}
+function worksSrc(){
+  const live = works.filter(w => !removed.has(w.s));
+  return `const WORKS=[\n${live.map(w =>
+    `{\n"s": ${q(w.s)},\n"t": ${q(w.t)},\n"c": ${q(w.c)},\n"n": ${q(w.n)},\n"r": ${w.r}\n}`).join(",\n")}\n];\n`;
+}
+
+/* ── publish ────────────────────────────────────────── */
+const b64 = blob => new Promise(res => {
+  const fr = new FileReader();
+  fr.onload = () => res(fr.result.split(",")[1]);
+  fr.readAsDataURL(blob);
+});
+async function gh(path, opts = {}){
+  const r = await fetch(API + path, {
+    ...opts,
+    headers: { Authorization: "Bearer " + TOKEN, Accept: "application/vnd.github+json",
+               "Content-Type": "application/json", ...(opts.headers || {}) }
+  });
+  if (!r.ok){
+    let d = ""; try { d = (await r.json()).message || ""; } catch {}
+    throw new Error(`GitHub ${r.status}${d ? " — " + d : ""}`);
+  }
+  return r.json();
+}
+
+$("btnPublish").onclick = async () => {
+  const b = $("btnPublish"); const log = [];
+  const say = t => { log.push(t); $("banner").innerHTML =
+    `<div class="msg info"><b>Publishing…</b><div class="log">${log.map(x => `<div>${x}</div>`).join("")}</div></div>`; };
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Publishing';
+  [...document.querySelectorAll("#app input,#app select,#app button")].forEach(el => { if (el !== b) el.disabled = true; });
+  try {
+    say("Reading the current branch…");
+    const ref = await gh(`/git/ref/heads/${BRANCH}`);
+    const head = ref.object.sha;
+    const parent = await gh(`/git/commits/${head}`);
+
+    const tree = [];
+    const newFiles = [...pending.values()].flatMap(p => p.files);
+    for (const [n, f] of newFiles.entries()){
+      say(`Uploading image ${n + 1} of ${newFiles.length} — <b>${f.path.split("/").pop()}</b>`);
+      const blob = await gh("/git/blobs", { method: "POST",
+        body: JSON.stringify({ content: await b64(f.blob), encoding: "base64" }) });
+      tree.push({ path: f.path, mode: "100644", type: "blob", sha: blob.sha });
+    }
+    say("Writing catalog.js and works.js…");
+    for (const [path, content] of [["site/catalog.js", catalogSrc()], ["site/works.js", worksSrc()]]){
+      const blob = await gh("/git/blobs", { method: "POST",
+        body: JSON.stringify({ content, encoding: "utf-8" }) });
+      tree.push({ path, mode: "100644", type: "blob", sha: blob.sha });
+    }
+    say("Making the commit…");
+    const added = pending.size, gone = removed.size;
+    const bits = [];
+    if (added) bits.push(`${added} new listing${added > 1 ? "s" : ""}`);
+    if (gone)  bits.push(`${gone} removed`);
+    bits.push("catalogue edits");
+    const t = await gh("/git/trees", { method: "POST",
+      body: JSON.stringify({ base_tree: parent.tree.sha, tree }) });
+    const commit = await gh("/git/commits", { method: "POST",
+      body: JSON.stringify({ message: "Studio: " + bits.join(", "), tree: t.sha, parents: [head] }) });
+    say("Pointing the branch at it…");
+    await gh(`/git/refs/heads/${BRANCH}`, { method: "PATCH", body: JSON.stringify({ sha: commit.sha }) });
+
+    msg($("banner"), "ok",
+      `<b>Published.</b> Commit <a href="https://github.com/${OWNER}/${REPO}/commit/${commit.sha}" target="_blank" rel="noopener">${commit.sha.slice(0,7)}</a> is on the branch.
+       The site rebuilds itself — give it about five minutes, then hard-refresh
+       <a href="${SITE}" target="_blank" rel="noopener">aaina.space</a> to see it.`);
+    pending.forEach(p => URL.revokeObjectURL(p.thumbURL));
+    pending.clear(); removed.clear(); baseline = snapshot(); markClean();
+  } catch (e) {
+    const conflict = /409|not a fast forward|409/i.test(e.message);
+    msg($("banner"), "err", `<b>Nothing was published.</b> ${esc(e.message)}.` +
+      (conflict ? " The branch moved while you were editing — press <b>Reload from site</b> and redo this change."
+                : " Your edits are still here; you can press Publish again."));
+  } finally {
+    [...document.querySelectorAll("#app input,#app select,#app button")].forEach(el => el.disabled = false);
+    b.innerHTML = "Publish"; markDirty(); check();
+  }
+};
+
+addEventListener("beforeunload", e => { if (dirtyCount()){ e.preventDefault(); e.returnValue = ""; } });
+
+/* remembered key */
+const saved = localStorage.getItem("aaina.key");
+if (saved){ $("tok").value = saved; $("btnUnlock").click(); }
+</script>
+</body>
+</html>

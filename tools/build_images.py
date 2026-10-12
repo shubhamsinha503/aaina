@@ -47,10 +47,16 @@ def main():
                    if f.lower().endswith((".heic", ".jpg", ".jpeg", ".png")))
     slug_map = {"p%02d" % (i + 1): f for i, f in enumerate(files)}
 
+    # Only clear the slugs this run can actually rebuild. Pieces added through
+    # the studio dashboard have no file in source-photos/ — their images were
+    # rendered in the browser — so emptying these folders outright would delete
+    # them with nothing able to put them back.
+    rebuildable = {w["s"] for w in works if w["s"] in slug_map}
     for d in ("thumb", "full"):
         os.makedirs(f"{OUT}/{d}", exist_ok=True)
         for f in os.listdir(f"{OUT}/{d}"):
-            os.remove(f"{OUT}/{d}/{f}")
+            if f.split("-")[0].split(".")[0] in rebuildable:
+                os.remove(f"{OUT}/{d}/{f}")
 
     total = 0
     for w in works:

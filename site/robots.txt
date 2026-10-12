@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /studio.html
 
 Sitemap: https://aaina.space/sitemap.xml
