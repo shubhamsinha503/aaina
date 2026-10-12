@@ -92,16 +92,13 @@ site/                   the website — this is what Vercel publishes
   robots.txt, sitemap.xml
 source-photos/          your original HEIC/JPG/MP4 files — NOT in git, see below
 tools/                  build_images.py (rebuilds all image sizes),
-                        convert.py + make_zip.py (legacy)
+                        build_works.py, convert.py (legacy)
 ```
 
 **`source-photos/` is deliberately excluded from git** — 182 MB of HEIC and
 video is too much for a repository, and the site only needs the converted
 images. **This means GitHub is not backing up your originals.** Keep a copy on
 an external drive or cloud storage; those are the only originals of your work.
-
-`UPDATE SITE.bat` and `tools/make_zip.py` are leftovers from the old
-upload-a-zip workflow. Harmless, and no longer needed.
 
 ---
 
